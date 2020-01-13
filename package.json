@@ -1,0 +1,14 @@
+{
+  "name": "functional-programming",
+  "version": "1.0.0",
+  "description": "hands on with functional programming typescript",
+  "author": "Kei Fujikawa",
+  "license": "MIT",
+  "scripts": {
+    "start": "ts-node"
+  },
+  "devDependencies": {
+    "ts-node": "^8.6.1",
+    "typescript": "^3.7.4"
+  }
+}
