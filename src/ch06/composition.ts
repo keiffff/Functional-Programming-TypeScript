@@ -11,3 +11,9 @@ const composeMany = <T>(...functions: Array<(args: T) => T>) => (arg: any) =>
   functions.reduce((prev, curr) => {
     return curr(prev);
   }, arg);
+
+const replace = (f: string, r: string) => (s: string) => s.split(f).join(r);
+
+const trimCapitalizeAndReplace = compose(trimAndCapitalize, replace("/", "-"));
+
+console.log(trimCapitalizeAndReplace("  13/feb/1989 "));
