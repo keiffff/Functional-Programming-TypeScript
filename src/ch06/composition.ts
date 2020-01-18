@@ -16,6 +16,9 @@ function curry3<T1, T2, T3, T4>(fn: (a: T1, b: T2, c: T3) => T4) {
   return (a: T1) => (b: T2) => (c: T3) => fn(a, b, c);
 }
 
+const pipe = <T>(...fns: Array<(arg: T) => T>) => (value: T) =>
+  fns.reduce((acc, fn) => fn(acc), value);
+
 const replace = (s: string, f: string, r: string) => s.split(f).join(r);
 
 const curriedReplace = curry3(replace);
@@ -27,6 +30,12 @@ const trimCapitalizeAndReplaceByCurry = compose(
   curriedReplace("/")("-")
 );
 
+const trimCapitalizeAndReplaceByPipe = pipe(
+  trim,
+  capitalize,
+  curriedReplace("/")("-")
+);
+
 const trimCapitalizeAndReplaceByBind = compose(
   trimAndCapitalize,
   replaceForwardSlashWithDash
@@ -34,3 +43,4 @@ const trimCapitalizeAndReplaceByBind = compose(
 
 console.log(trimCapitalizeAndReplaceByCurry("  13/feb/1989 "));
 console.log(trimCapitalizeAndReplaceByBind("  13/feb/1989 "));
+console.log(trimCapitalizeAndReplaceByPipe("  13/feb/1989 "));
