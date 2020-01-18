@@ -20,9 +20,17 @@ const replace = (s: string, f: string, r: string) => s.split(f).join(r);
 
 const curriedReplace = curry3(replace);
 
-const trimCapitalizeAndReplace = compose(
+const replaceForwardSlashWithDash = replace.bind(replace, "/", "-");
+
+const trimCapitalizeAndReplaceByCurry = compose(
   trimAndCapitalize,
   curriedReplace("/")("-")
 );
 
-console.log(trimCapitalizeAndReplace("  13/feb/1989 "));
+const trimCapitalizeAndReplaceByBind = compose(
+  trimAndCapitalize,
+  replaceForwardSlashWithDash
+);
+
+console.log(trimCapitalizeAndReplaceByCurry("  13/feb/1989 "));
+console.log(trimCapitalizeAndReplaceByBind("  13/feb/1989 "));
