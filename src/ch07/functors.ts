@@ -1,4 +1,8 @@
 class Container<T> {
+  public static of<TVal>(val: TVal) {
+    return new Container(val);
+  }
+
   private _value: T;
 
   public constructor(val: T) {
@@ -8,9 +12,15 @@ class Container<T> {
   public map<TMap>(fn: (val: T) => TMap) {
     return new Container<TMap>(fn(this._value));
   }
+
+  public ap<TMap>(c: Container<(val: T) => TMap>) {
+    return c.map(fn => this.map(fn));
+  }
 }
 
 const double = (x: number) => x + x;
-const container = new Container(3);
-const container2 = container.map(double);
-console.log(container2);
+const numberContainer = Container.of(3);
+const functionContainer = Container.of(double);
+
+console.log(numberContainer.map(double));
+console.log(numberContainer.ap(functionContainer));
